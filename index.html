@@ -1,21 +1,60 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Omnilife RAG Chat</title>
+    <title>SaludNatural360 - Asistente de Productos</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
         theme: {
           extend: {
             colors: {
-              'gem-onyx': '#1a1a1a',
-              'gem-slate': '#2b2b2b',
-              'gem-mist': '#3f3f3f',
-              'gem-offwhite': '#e2e8f0',
-              'gem-teal': '#0d9488',
-              'gem-blue': '#2563eb',
+              // SaludNatural360 Brand Colors
+              'brand': {
+                DEFAULT: '#5E8F7B',
+                soft: '#A7C4B5',
+                physical: '#6FB1D6',
+                spiritual: '#B5A7E1',
+                hover: '#4a7a66',
+              },
+              'text': {
+                base: '#2E3A3A',
+                muted: '#6B7A7A',
+              },
+              'surface': {
+                base: '#FFFFFF',
+                muted: '#F4EFE9',
+              },
+              // State colors
+              'success': '#5E8F7B',
+              'info': '#6FB1D6',
+              'warning': '#D7A76F',
+              'error': '#D66F6F',
+              // Legacy aliases for compatibility
+              'gem-onyx': '#F4EFE9',
+              'gem-slate': '#FFFFFF',
+              'gem-mist': '#A7C4B5',
+              'gem-offwhite': '#2E3A3A',
+              'gem-teal': '#5E8F7B',
+              'gem-blue': '#5E8F7B',
+            },
+            fontFamily: {
+              'heading': ['Manrope', 'Inter', 'system-ui', 'sans-serif'],
+              'body': ['Inter', 'system-ui', 'sans-serif'],
+            },
+            borderRadius: {
+              'xl': '1rem',
+              '2xl': '1.5rem',
+              '3xl': '24px',
+            },
+            boxShadow: {
+              'sm': '0 2px 6px rgba(0, 0, 0, 0.06)',
+              'md': '0 6px 20px rgba(0, 0, 0, 0.08)',
+              'lg': '0 12px 40px rgba(0, 0, 0, 0.12)',
             },
           }
         }
@@ -23,7 +62,7 @@
     </script>
     <link rel="stylesheet" href="/index.css">
   </head>
-  <body class="bg-gem-onyx">
+  <body class="bg-surface-muted font-body">
     <div id="root"></div>
     <script type="module" src="/main.tsx"></script>
   </body>

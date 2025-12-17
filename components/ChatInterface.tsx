@@ -66,7 +66,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ documentName, history, is
             const line = rawLine
                 .replace(/\*\*(.*?)\*\*|__(.*?)__/g, '<strong>$1$2</strong>')
                 .replace(/\*(.*?)\*|_(.*?)_/g, '<em>$1$2</em>')
-                .replace(/`([^`]+)`/g, '<code class="bg-gem-mist/50 px-1 py-0.5 rounded-sm font-mono text-sm">$1</code>');
+                .replace(/`([^`]+)`/g, '<code class="bg-brand-soft/30 px-1 py-0.5 rounded-sm font-mono text-sm">$1</code>');
 
             const isOl = line.match(/^\s*\d+\.\s(.*)/);
             const isUl = line.match(/^\s*[\*\-]\s(.*)/);
@@ -126,46 +126,46 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ documentName, history, is
 
     return (
         <div className="flex flex-col h-full relative">
-            <header className="absolute top-0 left-0 right-0 p-4 bg-gem-onyx/80 backdrop-blur-sm z-10 flex justify-between items-center border-b border-gem-mist">
+            <header className="absolute top-0 left-0 right-0 p-4 bg-surface-base/90 backdrop-blur-sm z-10 flex justify-between items-center border-b border-brand-soft/30 shadow-sm">
                 <div className="w-full max-w-4xl mx-auto flex justify-between items-center px-4">
-                    <h1 className="text-2xl font-bold text-gem-offwhite truncate" title={`Chat with ${documentName}`}>Chat with {documentName}</h1>
+                    <h1 className="text-2xl font-heading font-bold text-text-base truncate" title={`Chat con ${documentName}`}>Chat con {documentName}</h1>
                     {!hideNewChatButton && (
                         <button
                             onClick={onNewChat}
-                            className="flex items-center px-4 py-2 bg-gem-blue hover:bg-blue-500 rounded-full text-white transition-colors flex-shrink-0"
-                            title="End current chat and start a new one"
+                            className="flex items-center px-4 py-2 bg-brand hover:bg-brand-hover rounded-full text-white transition-colors flex-shrink-0"
+                            title="Terminar chat actual e iniciar uno nuevo"
                         >
                             <RefreshIcon />
-                            <span className="ml-2 hidden sm:inline">New Chat</span>
+                            <span className="ml-2 hidden sm:inline">Nuevo Chat</span>
                         </button>
                     )}
                 </div>
             </header>
 
-            <div className="flex-grow pt-24 pb-32 overflow-y-auto px-4">
+            <div className="flex-grow pt-24 pb-32 overflow-y-auto px-4 bg-surface-muted">
                 <div className="w-full max-w-4xl mx-auto space-y-6">
                     {history.map((message, index) => (
                         <div key={index} className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                            <div className={`max-w-xl lg:max-w-2xl px-5 py-3 rounded-2xl ${
+                            <div className={`max-w-xl lg:max-w-2xl px-5 py-3 rounded-2xl shadow-sm ${
                                 message.role === 'user' 
-                                ? 'bg-gem-blue text-white' 
-                                : 'bg-gem-slate'
+                                ? 'bg-brand text-white' 
+                                : 'bg-surface-base text-text-base'
                             }`}>
                                 <div dangerouslySetInnerHTML={renderMarkdown(message.parts[0].text)} />
                                 {message.role === 'model' && message.groundingChunks && message.groundingChunks.length > 0 && (
-                                    <div className="mt-4 pt-3 border-t border-gem-mist/50">
-                                        <h4 className="text-xs font-semibold text-gem-offwhite/70 mb-2 text-right">Sources:</h4>
+                                    <div className="mt-4 pt-3 border-t border-brand-soft/30">
+                                        <h4 className="text-xs font-semibold text-text-muted mb-2 text-right">Fuentes:</h4>
                                         <div className="flex flex-wrap gap-2 justify-end">
                                             {message.groundingChunks.map((chunk, chunkIndex) => (
                                                 chunk.retrievedContext?.text && (
                                                     <button
                                                         key={chunkIndex}
                                                         onClick={() => handleSourceClick(chunk.retrievedContext!.text!)}
-                                                        className="bg-gem-mist/50 hover:bg-gem-mist text-xs px-3 py-1 rounded-md transition-colors"
-                                                        aria-label={`View source ${chunkIndex + 1}`}
-                                                        title="View source document chunk"
+                                                        className="bg-brand-soft/40 hover:bg-brand-soft text-text-base text-xs px-3 py-1 rounded-md transition-colors"
+                                                        aria-label={`Ver fuente ${chunkIndex + 1}`}
+                                                        title="Ver fragmento del documento fuente"
                                                     >
-                                                        Source {chunkIndex + 1}
+                                                        Fuente {chunkIndex + 1}
                                                     </button>
                                                 )
                                             ))}
@@ -177,7 +177,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ documentName, history, is
                     ))}
                     {isQueryLoading && (
                         <div className="flex justify-start">
-                            <div className="max-w-xl lg:max-w-2xl px-5 py-3 rounded-2xl bg-gem-slate flex items-center">
+                            <div className="max-w-xl lg:max-w-2xl px-5 py-3 rounded-2xl bg-surface-base shadow-sm flex items-center">
                                 <Spinner />
                             </div>
                         </div>
@@ -186,16 +186,16 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ documentName, history, is
                 </div>
             </div>
 
-            <div className="absolute bottom-0 left-0 right-0 p-4 bg-gem-onyx/80 backdrop-blur-sm">
+            <div className="absolute bottom-0 left-0 right-0 p-4 bg-surface-base/90 backdrop-blur-sm shadow-lg">
                  <div className="max-w-4xl mx-auto">
                     <div className="text-center mb-2 min-h-[3rem] flex items-center justify-center">
                         {!isQueryLoading && currentSuggestion && (
                             <button
                                 onClick={() => setQuery(currentSuggestion)}
-                                className="text-base text-gem-offwhite bg-gem-slate hover:bg-gem-mist transition-colors px-4 py-2 rounded-full"
-                                title="Use this suggestion as your prompt"
+                                className="text-base text-text-base bg-brand-soft/30 hover:bg-brand-soft/50 transition-colors px-4 py-2 rounded-full border border-brand-soft"
+                                title="Usar esta sugerencia como tu pregunta"
                             >
-                                Try: "{currentSuggestion}"
+                                Prueba: "{currentSuggestion}"
                             </button>
                         )}
                     </div>
@@ -204,11 +204,11 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ documentName, history, is
                             type="text"
                             value={query}
                             onChange={(e) => setQuery(e.target.value)}
-                            placeholder="Ask a question about the manuals..."
-                            className="flex-grow bg-gem-mist border border-gem-mist/50 rounded-full py-3 px-5 focus:outline-none focus:ring-2 focus:ring-gem-blue"
+                            placeholder="Haz una pregunta sobre los productos..."
+                            className="flex-grow bg-surface-muted border border-brand-soft/50 rounded-full py-3 px-5 text-text-base focus:outline-none focus:ring-2 focus:ring-brand"
                             disabled={isQueryLoading}
                         />
-                        <button type="submit" disabled={isQueryLoading || !query.trim()} className="p-3 bg-gem-blue hover:bg-blue-500 rounded-full text-white disabled:bg-gem-mist transition-colors" title="Send message">
+                        <button type="submit" disabled={isQueryLoading || !query.trim()} className="p-3 bg-brand hover:bg-brand-hover rounded-full text-white disabled:bg-brand-soft/50 transition-colors" title="Enviar mensaje">
                             <SendIcon />
                         </button>
                     </form>
@@ -223,16 +223,16 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ documentName, history, is
                     aria-modal="true"
                     aria-labelledby="source-modal-title"
                 >
-                    <div className="bg-gem-slate p-6 rounded-lg shadow-xl w-full max-w-2xl max-h-[80vh] flex flex-col" onClick={e => e.stopPropagation()}>
-                        <h3 id="source-modal-title" className="text-xl font-bold mb-4">Source Text</h3>
+                    <div className="bg-surface-base p-6 rounded-xl shadow-lg w-full max-w-2xl max-h-[80vh] flex flex-col" onClick={e => e.stopPropagation()}>
+                        <h3 id="source-modal-title" className="text-xl font-heading font-bold mb-4 text-text-base">Texto Fuente</h3>
                         <div 
-                            className="flex-grow overflow-y-auto pr-4 text-gem-offwhite/80 border-t border-b border-gem-mist py-4"
+                            className="flex-grow overflow-y-auto pr-4 text-text-base border-t border-b border-brand-soft/30 py-4"
                             dangerouslySetInnerHTML={renderMarkdown(modalContent || '')}
                         >
                         </div>
                         <div className="flex justify-end mt-6">
-                            <button onClick={closeModal} className="px-6 py-2 rounded-md bg-gem-blue hover:bg-blue-500 text-white transition-colors" title="Close source view">
-                                Close
+                            <button onClick={closeModal} className="btn-primary" title="Cerrar vista de fuente">
+                                Cerrar
                             </button>
                         </div>
                     </div>

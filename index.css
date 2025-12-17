@@ -1,4 +1,120 @@
-/* index.css */
+/* index.css - SaludNatural360 Design System */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  /* Brand Colors */
+  --color-brand: #5E8F7B;
+  --color-brand-soft: #A7C4B5;
+  --color-brand-physical: #6FB1D6;
+  --color-brand-spiritual: #B5A7E1;
+  --color-brand-hover: #4a7a66;
+  
+  /* Text Colors */
+  --color-text-base: #2E3A3A;
+  --color-text-muted: #6B7A7A;
+  
+  /* Surface Colors */
+  --color-surface-base: #FFFFFF;
+  --color-surface-muted: #F4EFE9;
+  
+  /* State Colors */
+  --color-success: #5E8F7B;
+  --color-info: #6FB1D6;
+  --color-warning: #D7A76F;
+  --color-error: #D66F6F;
+  
+  /* Typography */
+  --font-heading: 'Manrope', 'Inter', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  
+  /* Spacing */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  
+  /* Border Radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+  
+  /* Shadows */
+  --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 6px 20px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.12);
+}
+
+/* Base styles */
+body {
+  font-family: var(--font-body);
+  color: var(--color-text-base);
+  background-color: var(--color-surface-muted);
+}
+
+/* Buttons */
+.btn-primary {
+  background-color: var(--color-brand);
+  color: white;
+  border-radius: var(--radius-xl);
+  padding: var(--spacing-sm) var(--spacing-lg);
+  font-weight: 600;
+  min-height: 44px;
+  transition: background-color 0.2s ease;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-brand-hover);
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: var(--color-brand);
+  border: 2px solid var(--color-brand);
+  border-radius: var(--radius-xl);
+  padding: var(--spacing-sm) var(--spacing-lg);
+  font-weight: 600;
+  min-height: 44px;
+  transition: all 0.2s ease;
+}
+
+.btn-secondary:hover {
+  background-color: var(--color-brand);
+  color: white;
+}
+
+/* Cards */
+.card {
+  background-color: var(--color-surface-base);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+/* Badges */
+.badge-physical {
+  background-color: var(--color-brand-physical);
+  color: white;
+  padding: 4px 8px;
+  border-radius: var(--radius-full);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.badge-spiritual {
+  background-color: var(--color-brand-spiritual);
+  color: white;
+  padding: 4px 8px;
+  border-radius: var(--radius-full);
+  font-size: 12px;
+  font-weight: 600;
+}

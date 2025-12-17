@@ -221,12 +221,12 @@ const App: React.FC = () => {
             case AppStatus.Initializing:
                 return (
                     <div className="flex items-center justify-center h-screen">
-                        <Spinner /> <span className="ml-4 text-xl">Waiting for initialization...</span>
+                        <Spinner /> <span className="ml-4 text-xl text-text-base">Esperando inicialización...</span>
                     </div>
                 );
             case AppStatus.Uploading: // Re-purposed to show "Generating suggestions..."
-                let icon = <img src="https://services.google.com/fh/files/misc/applet-suggestions_2.png" alt="Generating suggestions icon" className="h-80 w-80 rounded-lg object-cover" />;
-                let message = "Generating suggestions...";
+                let icon = <img src="https://services.google.com/fh/files/misc/applet-suggestions_2.png" alt="Generando sugerencias" className="h-80 w-80 rounded-lg object-cover shadow-md" />;
+                let message = "Generando sugerencias...";
                 
                 // You can add more granular progress if generateExampleQuestions had intermediate steps
                 // For now, it's a single blocking call, so we just show this state.
@@ -249,25 +249,25 @@ const App: React.FC = () => {
                 />;
             case AppStatus.Error:
                  return (
-                    <div className="flex flex-col items-center justify-center h-screen bg-red-900/20 text-red-300">
-                        <h1 className="text-3xl font-bold mb-4">Application Error</h1>
-                        <p className="max-w-md text-center mb-4">{error}</p>
-                        <button onClick={clearError} className="px-4 py-2 rounded-md bg-gem-mist hover:bg-gem-mist/70 transition-colors" title="Return to waiting for initialization">
-                           Try Again / Reset
+                    <div className="flex flex-col items-center justify-center h-screen bg-error/10 text-error">
+                        <h1 className="text-3xl font-heading font-bold mb-4">Error de Aplicación</h1>
+                        <p className="max-w-md text-center mb-4 text-text-base">{error}</p>
+                        <button onClick={clearError} className="btn-primary" title="Volver a intentar">
+                           Intentar de nuevo
                         </button>
                     </div>
                 );
             default:
                  return (
                     <div className="flex items-center justify-center h-screen">
-                        <Spinner /> <span className="ml-4 text-xl">Waiting for initialization...</span>
+                        <Spinner /> <span className="ml-4 text-xl text-text-base">Esperando inicialización...</span>
                     </div>
                 );
         }
     }
 
     return (
-        <main className="h-screen bg-gem-onyx text-gem-offwhite">
+        <main className="h-screen bg-surface-muted text-text-base font-body">
             {renderContent()}
         </main>
     );
