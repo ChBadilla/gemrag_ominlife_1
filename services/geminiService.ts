@@ -2,8 +2,8 @@
  * @license
  * SPDX-License-Identifier: Apache-2.0
 */
-import { GoogleGenAI, GenerateContentResponse, Type } from "@google/genai";
-import { RagStore, Document, QueryResult, CustomMetadata } from '../types';
+import { GoogleGenAI } from "@google/genai";
+import { QueryResult } from '../types';
 
 let ai: GoogleGenAI;
 
@@ -54,7 +54,7 @@ INSTRUCCIONES IMPORTANTES:
 8. Mantén un tono comercial, positivo y profesional.
 9. Termina después de explicar los productos y su uso - sin párrafos de cierre motivador.`;
 
-    const response: GenerateContentResponse = await ai.models.generateContent({
+    const response = await ai.models.generateContent({
         model: 'gemini-2.0-flash',
         contents: [
             {
@@ -74,11 +74,11 @@ INSTRUCCIONES IMPORTANTES:
                 }
             }
         ]
-    });
+    } as Parameters<typeof ai.models.generateContent>[0]);
 
     const groundingChunks = response.candidates?.[0]?.groundingMetadata?.groundingChunks || [];
     return {
-        text: response.text,
+        text: response.text || '',
         groundingChunks: groundingChunks,
     };
 }
@@ -106,9 +106,10 @@ export async function generateExampleQuestions(ragStoreName: string): Promise<st
                     }
                 }
             ]
-        });
+        } as Parameters<typeof ai.models.generateContent>[0]);
         
-        let jsonText = response.text.trim();
+        const rawText = response.text || '';
+        let jsonText = rawText.trim();
 
         const jsonMatch = jsonText.match(/```json\n([\s\S]*?)\n```/);
         if (jsonMatch && jsonMatch[1]) {

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
 */
 
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { AppStatus, ChatMessage, ParentMessage, ChildMessage, InitChatPayload, SendMessagePayload } from './types';
 import * as geminiService from './services/geminiService';
 import Spinner from './components/Spinner';
@@ -159,7 +159,7 @@ const App: React.FC = () => {
     // New useEffect for standalone initialization
     useEffect(() => {
         // If not in an iframe (no parent window), not already initialized, and in Initializing status
-        if (!window.parent && !activeRagStoreName && status === AppStatus.Initializing) {
+        if (window.parent === window && !activeRagStoreName && status === AppStatus.Initializing) {
             console.log("App running in standalone mode, initializing with default RAG store.");
             handleInitChat(DEFAULT_RAG_STORE_NAME, DEFAULT_CHAT_DISPLAY_NAME);
         }
