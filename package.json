@@ -1,0 +1,21 @@
+{
+  "name": "omni_rag_admin_scripts",
+  "version": "1.0.0",
+  "description": "Scripts de administración para RAG de Omnilife",
+  "main": "createRagStore.mjs",
+  "type": "module",
+  "scripts": {
+    "start": "node createRagStore.mjs",
+    "dev": "vite"
+  },
+  "dependencies": {
+    "@google/genai": "^1.29.0",
+    "csv-parser": "^3.2.0",
+    "dotenv": "^16.4.5",
+    "pdfkit": "^0.17.2"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^5.1.2",
+    "vite": "^7.3.0"
+  }
+}
