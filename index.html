@@ -3,10 +3,27 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Gemini RAG Store Manager</title>
+    <title>Omnilife RAG Chat</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              'gem-onyx': '#1a1a1a',
+              'gem-slate': '#2b2b2b',
+              'gem-mist': '#3f3f3f',
+              'gem-offwhite': '#e2e8f0',
+              'gem-teal': '#0d9488',
+              'gem-blue': '#2563eb',
+            },
+          }
+        }
+      }
+    </script>
     <link rel="stylesheet" href="/index.css">
   </head>
-  <body>
+  <body class="bg-gem-onyx">
     <div id="root"></div>
     <script type="module" src="/main.tsx"></script>
   </body>
