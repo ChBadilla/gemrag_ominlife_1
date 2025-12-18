@@ -2,8 +2,8 @@
  * @license
  * SPDX-License-Identifier: Apache-2.0
 */
-import { GoogleGenAI } from "@google/genai";
-import { QueryResult } from '../types';
+import { GoogleGenAI, GenerateContentResponse, Type } from "@google/genai";
+import { RagStore, Document, QueryResult, CustomMetadata } from '../types';
 
 let ai: GoogleGenAI;
 
@@ -41,20 +41,30 @@ export async function uploadToRagStore(ragStoreName: string, file: File): Promis
 export async function fileSearch(ragStoreName: string, query: string): Promise<QueryResult> {
     if (!ai) throw new Error("Gemini AI not initialized");
     
-    const systemPrompt = `Responde con enfoque comercial y positivo. 
-    
-INSTRUCCIONES IMPORTANTES:
-1. Comienza CON UN ÚNICO disclaimer médico breve en la primera línea: "Nota: Esta información no reemplaza la consulta médica profesional."
-2. NO repitas el disclaimer más adelante - aparece UNA SOLA VEZ.
-3. Recomienda TODOS los productos Omnilife específicos que pueden ayudar con la necesidad mencionada.
-4. Para cada producto: menciona sus beneficios principales y cómo usarlo.
-5. Incluye variedad de opciones - no excluyas productos por consideraciones secundarias (ej: cafeína).
-6. Sé conciso y directo - solo información relevante a la pregunta.
-7. NO incluyas secciones sobre la marca, calidad o historia de la empresa.
-8. Mantén un tono comercial, positivo y profesional.
-9. Termina después de explicar los productos y su uso - sin párrafos de cierre motivador.`;
+    const systemPrompt = `Eres un asistente experto en productos Omnilife. Responde de forma precisa y enfocada.
 
-    const response = await ai.models.generateContent({
+INSTRUCCIONES:
+1. Responde ÚNICAMENTE lo que el usuario pregunta - no agregues información no solicitada.
+2. Si preguntan sobre un producto específico (ingredientes, modo de uso, beneficios), responde solo sobre ese producto.
+3. NO ofrezcas productos adicionales a menos que el usuario lo solicite explícitamente (ej: "¿qué más me recomiendas?", "¿qué producto me ayuda con...?").
+4. Solo cuando el usuario pida una recomendación de productos, sugiere los más relevantes para su necesidad.
+5. Incluye el disclaimer médico SOLO cuando la respuesta involucre beneficios para la salud: "Nota: Esta información no reemplaza la consulta médica profesional."
+6. Sé conciso, directo y profesional.
+7. NO incluyas secciones sobre la marca, calidad o historia de la empresa.
+
+MODO AMPLIADO (cuando el usuario use palabras como "explique", "explica", "explícame", "amplia", "amplía", "detalla"):
+- Proporciona una respuesta completa y detallada que incluya:
+  a) Respuesta directa a la pregunta
+  b) Modo de uso del producto
+  c) Contraindicaciones (si las tiene)
+  d) Información adicional relevante del RAG
+  e) Sugerencias de otros productos complementarios
+
+SOBRE EL CREADOR:
+- Si preguntan quién creó Omnilife, la empresa, los productos, o el fundador: responde con información sobre Omnilife y su historia.
+- Si preguntan quién creó este asistente, el bot, la IA, o el chat: responde "Este Asistente IA fue creado por el equipo de Artifexteam, bajo la plataforma de Google."`;
+
+    const response: GenerateContentResponse = await ai.models.generateContent({
         model: 'gemini-2.0-flash',
         contents: [
             {
@@ -74,11 +84,11 @@ INSTRUCCIONES IMPORTANTES:
                 }
             }
         ]
-    } as Parameters<typeof ai.models.generateContent>[0]);
+    });
 
     const groundingChunks = response.candidates?.[0]?.groundingMetadata?.groundingChunks || [];
     return {
-        text: response.text || '',
+        text: response.text,
         groundingChunks: groundingChunks,
     };
 }
@@ -106,10 +116,9 @@ export async function generateExampleQuestions(ragStoreName: string): Promise<st
                     }
                 }
             ]
-        } as Parameters<typeof ai.models.generateContent>[0]);
+        });
         
-        const rawText = response.text || '';
-        let jsonText = rawText.trim();
+        let jsonText = response.text.trim();
 
         const jsonMatch = jsonText.match(/```json\n([\s\S]*?)\n```/);
         if (jsonMatch && jsonMatch[1]) {
