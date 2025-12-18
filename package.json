@@ -1,26 +1,34 @@
 {
-  "name": "omni_rag_admin_scripts",
+  "name": "omni_rag",
   "version": "1.0.0",
-  "description": "Scripts de administración para RAG de Omnilife",
-  "main": "createRagStore.mjs",
+  "description": "RAG Chat de Omnilife con backend seguro",
   "type": "module",
   "scripts": {
-    "start": "node createRagStore.mjs",
-    "dev": "vite"
+    "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
+    "dev:client": "vite",
+    "dev:server": "tsx watch server/index.ts",
+    "build": "vite build",
+    "build:server": "tsc -p tsconfig.server.json",
+    "start": "node dist-server/index.js",
+    "preview": "npm run build && npm run start"
   },
   "dependencies": {
     "@google/genai": "^1.29.0",
-    "csv-parser": "^3.2.0",
+    "cors": "^2.8.5",
     "dotenv": "^16.4.5",
-    "pdfkit": "^0.17.2",
+    "express": "^4.21.0",
     "react": "^19.2.3",
     "react-dom": "^19.2.3"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
     "@types/node": "^25.0.3",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^5.1.2",
+    "concurrently": "^8.2.2",
+    "tsx": "^4.19.0",
     "typescript": "^5.9.3",
     "vite": "^7.3.0"
   }
