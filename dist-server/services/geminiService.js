@@ -3,25 +3,16 @@
  * SPDX-License-Identifier: Apache-2.0
 */
 import { GoogleGenAI } from "@google/genai";
-
-export interface QueryResult {
-    text: string;
-    groundingChunks: any[];
-}
-
-let ai: GoogleGenAI;
-
-export function initialize(apiKey?: string) {
+let ai;
+export function initialize(apiKey) {
     ai = new GoogleGenAI({ apiKey: apiKey || process.env.API_KEY });
 }
-
-async function delay(ms: number): Promise<void> {
+async function delay(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
 }
-
-export async function fileSearch(ragStoreName: string, query: string): Promise<QueryResult> {
-    if (!ai) throw new Error("Gemini AI not initialized");
-    
+export async function fileSearch(ragStoreName, query) {
+    if (!ai)
+        throw new Error("Gemini AI not initialized");
     const systemPrompt = `Eres un asistente experto en productos Omnilife. Responde de forma precisa y enfocada.
 
 INSTRUCCIONES:
@@ -44,7 +35,6 @@ MODO AMPLIADO (cuando el usuario use palabras como "explique", "explica", "expl�
 SOBRE EL CREADOR:
 - Si preguntan quién creó Omnilife, la empresa, los productos, o el fundador: responde con información sobre Omnilife y su historia.
 - Si preguntan quién creó este asistente, el bot, la IA, o el chat: responde "Este Asistente IA fue creado por el equipo de Artifexteam, bajo la plataforma de Google."`;
-
     const response = await ai.models.generateContent({
         model: 'gemini-2.0-flash',
         contents: [
@@ -65,19 +55,18 @@ SOBRE EL CREADOR:
                 }
             }
         ]
-    } as any);
-
+    });
     const groundingChunks = response.candidates?.[0]?.groundingMetadata?.groundingChunks || [];
     return {
         text: response.text || '',
         groundingChunks: groundingChunks,
     };
 }
-
-export async function generateExampleQuestions(ragStoreName: string): Promise<string[]> {
-    if (!ai) throw new Error("Gemini AI not initialized");
+export async function generateExampleQuestions(ragStoreName) {
+    if (!ai)
+        throw new Error("Gemini AI not initialized");
     try {
-            const response = await ai.models.generateContent({
+        const response = await ai.models.generateContent({
             model: 'gemini-2.0-flash',
             contents: [
                 {
@@ -97,41 +86,36 @@ export async function generateExampleQuestions(ragStoreName: string): Promise<st
                     }
                 }
             ]
-        } as any);
-        
+        });
         let jsonText = (response.text || '').trim();
-
         const jsonMatch = jsonText.match(/```json\n([\s\S]*?)\n```/);
         if (jsonMatch && jsonMatch[1]) {
             jsonText = jsonMatch[1];
-        } else {
+        }
+        else {
             const firstBracket = jsonText.indexOf('[');
             const lastBracket = jsonText.lastIndexOf(']');
             if (firstBracket !== -1 && lastBracket !== -1 && lastBracket > firstBracket) {
                 jsonText = jsonText.substring(firstBracket, lastBracket + 1);
             }
         }
-        
         const parsedData = JSON.parse(jsonText);
-        
         if (Array.isArray(parsedData)) {
             if (parsedData.length === 0) {
                 return [];
             }
             const firstItem = parsedData[0];
-
             if (typeof firstItem === 'object' && firstItem !== null && 'questions' in firstItem && Array.isArray(firstItem.questions)) {
                 return parsedData.flatMap(item => (item.questions || [])).filter(q => typeof q === 'string');
             }
-            
             if (typeof firstItem === 'string') {
                 return parsedData.filter(q => typeof q === 'string');
             }
         }
-        
         console.warn("Received unexpected format for example questions:", parsedData);
         return [];
-    } catch (error) {
+    }
+    catch (error) {
         console.error("Failed to generate or parse example questions:", error);
         return [];
     }
