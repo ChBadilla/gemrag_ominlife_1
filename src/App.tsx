@@ -5,7 +5,7 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import { AppStatus, ChatMessage, ParentMessage, ChildMessage, InitChatPayload, SendMessagePayload } from './types';
-import * as geminiService from './services/geminiService';
+import * as apiClient from './services/apiClient';
 import Spinner from './components/Spinner';
 import ProgressBar from './components/ProgressBar';
 import ChatInterface from './components/ChatInterface';
@@ -66,7 +66,7 @@ const App: React.FC = () => {
         
         // Always re-initialize geminiService to ensure the API key is current (though we assume process.env.API_KEY is stable)
         try {
-            geminiService.initialize();
+            apiClient.initialize();
         } catch (err) {
             handleError("Initialization failed.", err);
             return;
@@ -86,7 +86,7 @@ const App: React.FC = () => {
             // Mimic progress bar with a single step for generating suggestions
             // setUploadProgress({ current: 0, total: 1, message: "Generating suggestions..." });
 
-            const questions = await geminiService.generateExampleQuestions(ragStoreResourceName);
+            const questions = await apiClient.generateExampleQuestions(ragStoreResourceName);
             setExampleQuestions(questions);
 
             // setUploadProgress({ current: 1, total: 1, message: "All set!" });
@@ -195,7 +195,7 @@ const App: React.FC = () => {
         setIsQueryLoading(true);
 
         try {
-            const result = await geminiService.fileSearch(activeRagStoreName, message);
+            const result = await apiClient.fileSearch(activeRagStoreName, message);
             const modelMessage: ChatMessage = {
                 role: 'model',
                 parts: [{ text: result.text }],
