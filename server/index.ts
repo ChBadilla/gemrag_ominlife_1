@@ -24,6 +24,12 @@ app.use((req, res, next) => {
     "frame-ancestors 'self' http://localhost:* http://127.0.0.1:* https://saludnatural360.shop https://*.saludnatural360.shop"
   );
   
+  // Permitir cookies en contexto de terceros (iframe)
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+  
+  // Permitir que el iframe acceda a storage
+  res.setHeader('Permissions-Policy', 'storage-access=(self "http://localhost:*" "https://saludnatural360.shop")');
+  
   next();
 });
 
