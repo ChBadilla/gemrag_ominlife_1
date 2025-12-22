@@ -13,19 +13,21 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-app.use(cors());
-
-// Middleware para permitir iframe desde dominios autorizados
+// ⚠️ DEBE SER EL PRIMER MIDDLEWARE - Permitir iframe desde dominios autorizados
 app.use((req, res, next) => {
-  // Eliminar header restrictivo por defecto
+  // Remover cualquier header restrictivo existente
   res.removeHeader('X-Frame-Options');
-  // Permitir iframe solo desde estos orígenes
+  
+  // Permitir iframe desde estos orígenes
   res.setHeader(
     'Content-Security-Policy',
-    "frame-ancestors 'self' http://localhost:* https://saludnatural360.shop https://*.saludnatural360.shop"
+    "frame-ancestors 'self' http://localhost:* http://127.0.0.1:* https://saludnatural360.shop https://*.saludnatural360.shop"
   );
+  
   next();
 });
+
+app.use(cors());
 
 app.use(express.json());
 

@@ -5,6 +5,9 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   server: {
+    headers: {
+      'Content-Security-Policy': "frame-ancestors 'self' http://localhost:* http://127.0.0.1:* https://saludnatural360.shop https://*.saludnatural360.shop",
+    },
     proxy: {
       '/api': {
         target: 'http://localhost:3001',
