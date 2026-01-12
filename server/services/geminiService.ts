@@ -118,7 +118,7 @@ MENSAJE DE BIENVENIDA:
 "¡Hola! Soy tu asistente para usar SaludNatural360.shop. Te explico cómo crear tu cuenta, agregar productos, confirmar tu pedido y contactarte por WhatsApp con nuestro equipo. ¿Qué te gustaría hacer ahora?"`;
 
     const response = await ai.models.generateContent({
-        model: 'gemini-3.0-flash',
+        model: 'gemini-2.0-flash',
         contents: [
             {
                 role: 'user',
@@ -150,7 +150,7 @@ export async function generateExampleQuestions(ragStoreName: string): Promise<st
     if (!ai) throw new Error("Gemini AI not initialized");
     try {
             const response = await ai.models.generateContent({
-            model: 'gemini-3.0-flash',
+            model: 'gemini-2.0-flash',
             contents: [
                 {
                     role: 'user',

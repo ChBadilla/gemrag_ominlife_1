@@ -65,7 +65,7 @@ SOBRE EL CREADOR:
 - Si preguntan quién creó este asistente, el bot, la IA, o el chat: responde "Este Asistente IA fue creado por el equipo de Artifexteam, bajo la plataforma de Google."`;
 
     const response: GenerateContentResponse = await ai.models.generateContent({
-        model: 'gemini-3.0-flash',
+        model: 'gemini-2.0-flash',
         contents: [
             {
                 role: 'user',
@@ -97,7 +97,7 @@ export async function generateExampleQuestions(ragStoreName: string): Promise<st
     if (!ai) throw new Error("Gemini AI not initialized");
     try {
         const response = await ai.models.generateContent({
-            model: 'gemini-3.0-flash',
+            model: 'gemini-2.0-flash',
             contents: [
                 {
                     role: 'user',
