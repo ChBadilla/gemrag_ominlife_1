@@ -25,7 +25,7 @@ Luego abrir en navegador:
 
 ### Opción 2: Si React está en proyecto padre
 
-Este proyecto (`omni_rag`) contiene:
+Este proyecto (`SN360Asist`) contiene:
 - ✅ `App.tsx` - Componente React principal
 - ✅ `services/geminiService.ts` - Integración RAG actualizada
 - ✅ `components/` - Interfaz de usuario
@@ -83,7 +83,7 @@ Verificar que cada respuesta tenga:
 ## Estructuras de Archivos
 
 ```
-omni_rag/
+SN360Asist/
 ├── App.tsx (✅ Actualizado)
 ├── services/
 │   └── geminiService.ts (✅ Actualizado con prompt mejorado)

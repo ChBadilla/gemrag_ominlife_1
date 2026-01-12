@@ -72,7 +72,7 @@ node demoRAG.mjs
 ## Archivos Principales
 
 ```
-omni_rag/
+SN360Asist/
 ├── App.tsx                              # App React principal
 ├── services/geminiService.ts            # API de Gemini
 ├── components/

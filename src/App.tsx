@@ -158,10 +158,23 @@ const App: React.FC = () => {
 
     // New useEffect for standalone initialization
     useEffect(() => {
-        // If not in an iframe (no parent window), not already initialized, and in Initializing status
-        if (window.parent === window && !activeRagStoreName && status === AppStatus.Initializing) {
-            console.log("App running in standalone mode, initializing with default RAG store.");
-            handleInitChat(DEFAULT_RAG_STORE_NAME, DEFAULT_CHAT_DISPLAY_NAME);
+        // Initialize if:
+        // 1. Not in an iframe (window.parent === window), OR
+        // 2. In VS Code Simple Browser or similar dev environment (no parent communication expected)
+        // And not already initialized, and in Initializing status
+        const isStandalone = window.parent === window;
+        const shouldAutoInit = !activeRagStoreName && status === AppStatus.Initializing;
+        
+        if (shouldAutoInit) {
+            // Auto-initialize after a short delay to allow parent messages to arrive first
+            const timer = setTimeout(() => {
+                if (!activeRagStoreName && status === AppStatus.Initializing) {
+                    console.log("App auto-initializing with default RAG store.");
+                    handleInitChat(DEFAULT_RAG_STORE_NAME, DEFAULT_CHAT_DISPLAY_NAME);
+                }
+            }, isStandalone ? 0 : 1000); // Wait 1 second in iframe mode for parent message
+            
+            return () => clearTimeout(timer);
         }
     }, [status, activeRagStoreName, handleInitChat]); // Dependencies to re-run when status or activeRagStoreName changes
 

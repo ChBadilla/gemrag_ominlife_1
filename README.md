@@ -73,7 +73,7 @@ La aplicación estará disponible en `http://localhost:5173`
 ## 📁 Estructura del Proyecto
 
 ```
-omni_rag/
+SN360Asist/
 ├── App.tsx                 # Componente principal
 ├── index.html              # HTML con configuración Tailwind
 ├── index.css               # Variables CSS y clases utilitarias

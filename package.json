@@ -1,7 +1,7 @@
 {
-  "name": "omni_rag",
+  "name": "sn360-asist",
   "version": "1.0.0",
-  "description": "RAG Chat de Omnilife con backend seguro",
+  "description": "SN360Asist - Asistente RAG de SaludNatural360",
   "type": "module",
   "scripts": {
     "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",

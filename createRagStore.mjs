@@ -9,7 +9,7 @@ import dotenv from 'dotenv';
 // Load environment variables from .env file
 dotenv.config();
 
-const PROJECT_ID = process.env.PROJECT_ID || 'sn360-omnirag'; // Use your actual project ID
+const PROJECT_ID = process.env.PROJECT_ID || 'sn360-asist'; // Use your actual project ID
 const LOCATION = process.env.LOCATION || 'global'; // Or your specific region, 'global' is common for FileSearch
 
 async function main() {

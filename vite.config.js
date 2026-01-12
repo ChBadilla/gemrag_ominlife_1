@@ -6,7 +6,8 @@ export default defineConfig({
   plugins: [react()],
   server: {
     headers: {
-      'Content-Security-Policy': "frame-ancestors 'self' http://localhost:* http://127.0.0.1:* https://saludnatural360.shop https://*.saludnatural360.shop",
+      // Permitir VS Code Simple Browser y otros orígenes
+      'Content-Security-Policy': "frame-ancestors 'self' http://localhost:* http://127.0.0.1:* https://saludnatural360.shop https://*.saludnatural360.shop vscode-webview://* vscode-file://*",
     },
     proxy: {
       '/api': {

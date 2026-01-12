@@ -5,22 +5,22 @@
 
 :root {
   /* Brand Colors */
-  --color-brand: #5E8F7B;
+  --color-brand: #4A7A66;
   --color-brand-soft: #A7C4B5;
   --color-brand-physical: #6FB1D6;
   --color-brand-spiritual: #B5A7E1;
-  --color-brand-hover: #4a7a66;
+  --color-brand-hover: #3D6655;
   
   /* Text Colors */
-  --color-text-base: #2E3A3A;
-  --color-text-muted: #6B7A7A;
+  --color-text-base: #1F2937;
+  --color-text-muted: #6B7280;
   
   /* Surface Colors */
   --color-surface-base: #FFFFFF;
-  --color-surface-muted: #F4EFE9;
+  --color-surface-muted: #F5F3F7;
   
   /* State Colors */
-  --color-success: #5E8F7B;
+  --color-success: #4A7A66;
   --color-info: #6FB1D6;
   --color-warning: #D7A76F;
   --color-error: #D66F6F;

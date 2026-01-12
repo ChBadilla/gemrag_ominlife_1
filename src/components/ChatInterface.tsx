@@ -128,7 +128,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ documentName, history, is
         <div className="flex flex-col h-full relative">
             <header className="absolute top-0 left-0 right-0 p-4 bg-surface-base/90 backdrop-blur-sm z-10 flex justify-between items-center border-b border-brand-soft/30 shadow-sm">
                 <div className="w-full max-w-4xl mx-auto flex justify-between items-center px-4">
-                    <h1 className="text-2xl font-heading font-bold text-text-base truncate" title={`Chat con ${documentName}`}>Chat con {documentName}</h1>
+                    <h1 className="text-2xl font-heading font-bold text-text-base truncate" title="Bienvenido a su Asistente IA">Bienvenido a su Asistente IA</h1>
                     {!hideNewChatButton && (
                         <button
                             onClick={onNewChat}
@@ -204,7 +204,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ documentName, history, is
                             type="text"
                             value={query}
                             onChange={(e) => setQuery(e.target.value)}
-                            placeholder="Haz una pregunta sobre los productos..."
+                            placeholder="IA Asistente, le ayudo a utilizar esta App..."
                             className="flex-grow bg-surface-muted border border-brand-soft/50 rounded-full py-3 px-5 text-text-base focus:outline-none focus:ring-2 focus:ring-brand"
                             disabled={isQueryLoading}
                         />
